@@ -1,29 +1,33 @@
 functionconvertToURL() {
     const config = document.getElementById('configInput').value;
     const lines = config.split('\n');
+    
     let privateKey = '', publicKey = '', address = '', mtu = '', endpoint = '', port = '';
 
     lines.forEach(line => {
-        if (line.includes('Secret Key')) {
-            privateKey = line.split(' ').pop();
+        if (line.startsWith('Secret Key ')) {
+            privateKey = line.split(' ').pop().trim();
         }
-        if (line.includes('Public Key')) {
-            publicKey = line.split(' ').pop();
+        if (line.startsWith('Public Key ')) {
+            publicKey = line.split(' ').pop().trim();
         }
-        if (line.includes('Address')) {
-            address = line.split(' ').pop();
+        if (line.startsWith('Address ')) {
+            endpoint = line.split(' ').pop().trim();
         }
-        if (line.includes('MTU')) {
-            mtu = line.split(' ').pop();
+        if (line.startsWith('Port ')) {
+            port = line.split(' ').pop().trim();
         }
-        if (line.includes('Endpoint')) {
-            const endpointParts = line.split(' ').pop().split(':');
-            endpoint = endpointParts[0];
-            port = endpointParts[1];
+        if (line.startsWith('MTU ')) {
+            mtu = line.split(' ').pop().trim();
         }
     });
 
-    const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}:${port}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${encodeURIComponent(mtu)}#test`;
+    if (!endpoint || !port) {
+        alert('Please ensure that "Address" and "Port" are provided in the config.');
+        return;
+    }
+
+    const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}:${port}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(endpoint)}&mtu=${encodeURIComponent(mtu)}#test`;
 
     document.getElementById('output').innerText = url;
 }
