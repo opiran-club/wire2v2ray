@@ -4,7 +4,7 @@ functionconvertToURL() {
 
     let privateKey = '', publicKey = '', address = '', mtu = '', endpoint = '', port = '';
 
-    // Determine the formatconst isFormat1 = lines.some(line => line.includes('PrivateKey')) && lines.some(line => line.includes('Endpoint'));
+    // Determine the formatconst isFormat1 = lines.some(line => line.includes('PrivateKey =')) && lines.some(line => line.includes('Endpoint ='));
     const isFormat2 = lines.some(line => line.includes('Secret Key')) && lines.some(line => line.includes('Address'));
 
     if (isFormat1) {
