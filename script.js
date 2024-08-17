@@ -30,6 +30,7 @@ functionconvertToURL() {
     const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}:${port}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(endpoint)}&mtu=${encodeURIComponent(mtu)}#test`;
 
     document.getElementById('output').innerText = url;
+    document.getElementById('copyButton').style.display = 'inline-block';  // Show the copy button
 }
 
 functioncopyToClipboard() {
