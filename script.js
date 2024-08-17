@@ -4,23 +4,53 @@ functionconvertToURL() {
 
     let privateKey = '', publicKey = '', address = '', mtu = '', endpoint = '', port = '';
 
-    lines.forEach(line => {
-        if (line.startsWith('Secret Key ')) {
-            privateKey = line.split(' ').pop().trim();
-        }
-        if (line.startsWith('Public Key ')) {
-            publicKey = line.split(' ').pop().trim();
-        }
-        if (line.startsWith('Address ')) {
-            address = line.split(' ').pop().trim();
-        }
-        if (line.startsWith('Port ')) {
-            port = line.split(' ').pop().trim();
-        }
-        if (line.startsWith('MTU ')) {
-            mtu = line.split(' ').pop().trim();
-        }
-    });
+    // Determine the formatconst isFormat1 = lines.some(line => line.includes('PrivateKey')) && lines.some(line => line.includes('Endpoint'));
+    const isFormat2 = lines.some(line => line.includes('Secret Key')) && lines.some(line => line.includes('Address'));
+
+    if (isFormat1) {
+        // Parsing FORMAT1
+        lines.forEach(line => {
+            if (line.startsWith('PrivateKey =')) {
+                privateKey = line.split('=').pop().trim();
+            }
+            if (line.startsWith('PublicKey =')) {
+                publicKey = line.split('=').pop().trim();
+            }
+            if (line.startsWith('Address =')) {
+                address = line.split('=').pop().trim();
+            }
+            if (line.startsWith('MTU =')) {
+                mtu = line.split('=').pop().trim();
+            }
+            if (line.startsWith('Endpoint =')) {
+                const endpointParts = line.split('=').pop().trim().split(':');
+                endpoint = endpointParts[0];
+                port = endpointParts[1];
+            }
+        });
+    } elseif (isFormat2) {
+        // Parsing FORMAT2
+        lines.forEach(line => {
+            if (line.startsWith('Secret Key')) {
+                privateKey = line.split(' ').pop().trim();
+            }
+            if (line.startsWith('Public Key')) {
+                publicKey = line.split(' ').pop().trim();
+            }
+            if (line.startsWith('Address')) {
+                address = line.split(' ').pop().trim();
+            }
+            if (line.startsWith('Port')) {
+                port = line.split(' ').pop().trim();
+            }
+            if (line.startsWith('MTU')) {
+                mtu = line.split(' ').pop().trim();
+            }
+        });
+    } else {
+        alert('Unsupported configuration format.');
+        return;
+    }
 
     // Validate necessary fieldsif (!privateKey || !publicKey || !address || !port) {
         alert('Please ensure all required fields (Secret Key, Public Key, Address, Port) are provided in the config.');
