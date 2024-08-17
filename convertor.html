@@ -1,1 +1,21 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WireGuard Config to v2ray URL</title><link rel="stylesheet" href="styles.css"></head><body><div id="converter"><textarea id="configInput" placeholder="Paste your WireGuard config here..."></textarea><button onclick="convertToURL()">Convert to wireguard:// URL</button><div id="outputContainer"><div id="output"></div><button id="copyButton" style="display:none;" onclick="copyToClipboard()">Copy to Clipboard</button></div></div><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert WireGuard config to v2ray URL">
+    <title>WireGuard Config to v2ray URL</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="converter">
+        <textarea id="configInput" placeholder="Paste your WireGuard config here..." aria-label="WireGuard config input"></textarea>
+        <button onclick="convertToURL()">Convert to wireguard:// URL</button>
+        <div id="outputContainer">
+            <div id="output" aria-label="Output URL"></div>
+            <button id="copyButton" style="display:none;" onclick="copyToClipboard()">Copy to Clipboard</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
