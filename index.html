@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>WireGuard URI Generator</title>
+        <title>WireGuard 2 v2ray Generator</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -26,10 +26,10 @@
                 <input type="text" id="peerPublicKey" name="peerPublicKey" required>
                 <label for="allowedIPs">Allowed IPs:</label>
                 <input type="text" id="allowedIPs" name="allowedIPs" required>
-                <button type="button" onclick="convertToURL()">Generate URI</button>
+                <button type="button" onclick="convertToURL()">Generate URL</button>
             </form>
             <div class="output">
-                <h3>Generated WireGuard URI:</h3>
+                <h3>Generated WireGuard URL:</h3>
                 <p id="wg-uri"></p>
             </div>
         </div>
