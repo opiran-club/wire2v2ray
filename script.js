@@ -31,3 +31,16 @@ functionconvertToURL() {
 
     document.getElementById('output').innerText = url;
 }
+
+functioncopyToClipboard() {
+    const url = document.getElementById('output').innerText;
+    if (url) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert('URL copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy URL: ', err);
+        });
+    } else {
+        alert('No URL to copy!');
+    }
+}
