@@ -1,6 +1,6 @@
-function convertToURL() {
-    const config = document.getElementById('configInput').value;
-    const lines = config.split('\n'); // Split the config into lineslet privateKey = '';
+'use strict'; // Enforce strict modefunction convertToURL() {
+    console.log('Function called'); // Debug lineconst config = document.getElementById('configInput').value;
+    console.log(config); // Log input valueconst lines = config.split('\n'); // Split the config into lineslet privateKey = '';
     let publicKey = '';
     let address = '';
     let endpoint = '';
@@ -26,7 +26,7 @@ function convertToURL() {
 
     const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${mtu}`;
     
-    document.getElementById('output').textContent = url; // Output the result in the designated area
+    document.getElementById('output').value = url; // Output the result in the designated area
 }
 
 // Ensure that the convertToURL function is called when the button is clickeddocument.querySelector('button').addEventListener('click', convertToURL);
