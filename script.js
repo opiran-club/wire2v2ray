@@ -1,31 +1,29 @@
-'use strict';
 function convertToURL() {
-    console.log('Function called'); // Debug lineconst config = document.getElementById('configInput').value;
-    console.log(config); // Log input valueconst lines = config.split('\n'); // Split the config into lineslet privateKey = '';
-    let publicKey = '';
-    let address = '';
-    let endpoint = '';
-    let mtu = '';
+    const config = document.getElementById('configInput').value;
+    const lines = config.split('\n');
+    let privateKey = '', publicKey = '', address = '', mtu = '', endpoint = '', port = '';
 
     lines.forEach(line => {
-        if (line.startsWith('Secret Key')) {
-            privateKey = line.split('=')[1].trim();
-        } 
-        if (line.startsWith('Public Key')) {
-            publicKey = line.split('=')[1].trim();
-        } 
-        if (line.startsWith('Address')) {
-            address = line.split('=')[1].trim();
-        } 
-        if (line.startsWith('Port')) {
-            endpoint = `${address}:${line.split('=')[1].trim()}`;
-        } 
-        if (line.startsWith('MTU')) {
-            mtu = line.split('=')[1].trim();
+        if (line.includes('Secret Key')) {
+            privateKey = line.split(' ').pop();
+        }
+        if (line.includes('Public Key')) {
+            publicKey = line.split(' ').pop();
+        }
+        if (line.includes('Address')) {
+            address = line.split(' ').pop();
+        }
+        if (line.includes('MTU')) {
+            mtu = line.split(' ').pop();
+        }
+        if (line.includes('Endpoint')) {
+            const endpointParts = line.split(' ').pop().split(':');
+            endpoint = endpointParts[0];
+            port = endpointParts[1];
         }
     });
 
-    const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${mtu}`;
-    
-    document.getElementById('output').value = url; // Output the result in the designated area
+    const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}:${port}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${encodeURIComponent(mtu)}#test`;
+
+    document.getElementById('output').innerText = url;
 }
