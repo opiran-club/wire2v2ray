@@ -24,4 +24,3 @@ functionconvertToURL() {
     const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${mtu}`;
     
     document.getElementById('output').textContent = url; // Output the result in the designated area
-}
