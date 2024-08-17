@@ -1,4 +1,4 @@
-functionconvertToURL() {
+function convertToURL() {
     const config = document.getElementById('configInput').value;
     const lines = config.split('\n'); // Split the config into lineslet privateKey = '';
     let publicKey = '';
@@ -9,13 +9,17 @@ functionconvertToURL() {
     lines.forEach(line => {
         if (line.startsWith('Secret Key')) {
             privateKey = line.split('=')[1].trim();
-        } elseif (line.startsWith('Public Key')) {
+        } 
+        if (line.startsWith('Public Key')) {
             publicKey = line.split('=')[1].trim();
-        } elseif (line.startsWith('Address')) {
+        } 
+        if (line.startsWith('Address')) {
             address = line.split('=')[1].trim();
-        } elseif (line.startsWith('Port')) {
+        } 
+        if (line.startsWith('Port')) {
             endpoint = `${address}:${line.split('=')[1].trim()}`;
-        } elseif (line.startsWith('MTU')) {
+        } 
+        if (line.startsWith('MTU')) {
             mtu = line.split('=')[1].trim();
         }
     });
