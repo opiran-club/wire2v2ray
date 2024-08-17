@@ -8,7 +8,9 @@ function convertToURL() {
     const peerPublicKey = document.getElementById('peerPublicKey').value;
     const allowedIPs = document.getElementById('allowedIPs').value;
 
-    // Construct the WireGuard URIconst url = `wireguard://${encodeURIComponent(peerSecretKey)}@${address}:${port}/?publickey=${encodeURIComponent(peerPublicKey)}&address=${encodeURIComponent(allowedIPs)}&mtu=${encodeURIComponent(mtu)}`;
+    // Construct the WireGuard URI
+    const url = `wireguard://${encodeURIComponent(peerSecretKey)}@${address}:${port}/?publickey=${encodeURIComponent(peerPublicKey)}&address=${encodeURIComponent(allowedIPs)}&mtu=${encodeURIComponent(mtu)}`;
 
-    // Output the generated URLdocument.getElementById('wg-uri').innerText = url;
+    // Output the generated URL
+    document.getElementById('wg-uri').innerText = url;
 }
