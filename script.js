@@ -1,4 +1,4 @@
-functionconvertToURL() {
+function convertToURL() {
     const name = document.getElementById('name').value;
     const address = document.getElementById('address').value;
     const port = document.getElementById('port').value;
@@ -14,7 +14,7 @@ functionconvertToURL() {
     document.getElementById('wg-uri').innerText = url;
 }
 
-functioncopyToClipboard() {
+function copyToClipboard() {
     const urlElement = document.getElementById('wg-uri');
     const urlText = urlElement.innerText;
     navigator.clipboard.writeText(urlText).then(() => {
