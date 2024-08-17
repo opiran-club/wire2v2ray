@@ -1,81 +1,42 @@
 function convertToURL() {
-    const config = document.getElementById('configInput').value;
     const lines = config.split('\n');
+    let privateKey = '';
+    let publicKey = '';
+    let address = '';
+    let endpoint = '';
+    let mtu = '';
 
-    let privateKey = '', publicKey = '', address = '', mtu = '', endpoint = '', port = '';
+    lines.forEach(line => {
+        if (line.startsWith('PrivateKey') || line.startsWith('Secret Key')) {
+            privateKey = line.split('=')[1].trim();
+        } else if (line.startsWith('PublicKey') || line.startsWith('Public Key')) {
+            publicKey = line.split('=')[1].trim();
+        } else if (line.startsWith('Address') || line.startsWith('Allowed IPs')) {
+            address = line.split('=')[1].trim();
+        } else if (line.startsWith('Endpoint') || line.startsWith('Address')) {
+            endpoint = line.split('=')[1].trim();
+        } else if (line.startsWith('MTU')) {
+            mtu = line.split('=')[1].trim();
+        }
+    });
 
-    // Determine the format
-    const isFormat1 = lines.some(line => line.includes('PrivateKey =')) && lines.some(line => line.includes('Endpoint ='));
-    const isFormat2 = lines.some(line => line.includes('Secret Key')) && lines.some(line => line.includes('Address'));
-
-    if (isFormat1) {
-        // Parsing FORMAT1
-        lines.forEach(line => {
-            if (line.startsWith('PrivateKey =')) {
-                privateKey = line.split('=').pop().trim();
-            }
-            if (line.startsWith('PublicKey =')) {
-                publicKey = line.split('=').pop().trim();
-            }
-            if (line.startsWith('Address =')) {
-                address = line.split('=').pop().trim();
-            }
-            if (line.startsWith('MTU =')) {
-                mtu = line.split('=').pop().trim();
-            }
-            if (line.startsWith('Endpoint =')) {
-                const endpointParts = line.split('=').pop().trim().split(':');
-                endpoint = endpointParts[0];
-                port = endpointParts[1];
-            }
-        });
-    } else if (isFormat2) {
-        // Parsing FORMAT2
-        lines.forEach(line => {
-            if (line.startsWith('Secret Key')) {
-                privateKey = line.split(' ').pop().trim();
-            }
-            if (line.startsWith('Public Key')) {
-                publicKey = line.split(' ').pop().trim();
-            }
-            if (line.startsWith('Address')) {
-                address = line.split(' ').pop().trim();
-            }
-            if (line.startsWith('Port')) {
-                port = line.split(' ').pop().trim();
-            }
-            if (line.startsWith('MTU')) {
-                mtu = line.split(' ').pop().trim();
-            }
-        });
-    } else {
-        alert('Unsupported configuration format.');
-        return;
-    }
-
-    // Validate necessary fields
-    if (!privateKey || !publicKey || !address || !port) {
-        alert('Please ensure all required fields (Secret Key, Public Key, Address, Port) are provided in the config.');
-        return;
-    }
-
-    // Construct the URL
-    const url = `wireguard://${encodeURIComponent(privateKey)}@${address}:${port}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${encodeURIComponent(mtu)}#test`;
-
-    // Display the URL
-    document.getElementById('output').innerText = url;
-    document.getElementById('copyButton').style.display = 'inline-block';  // Show the copy button
+    const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${mtu}#test`;
+    return url;
 }
 
-function copyToClipboard() {
-    const url = document.getElementById('output').innerText;
-    if (url) {
-        navigator.clipboard.writeText(url).then(() => {
-            alert('URL copied to clipboard!');
-        }).catch(err => {
-            console.error('Failed to copy URL: ', err);
-        });
-    } else {
-        alert('No URL to copy!');
-    }
-}
+// Example usage:
+const config = `
+[Interface]
+PrivateKey = EFc6Mkqwx1MeUwryS0Z4FUg4fbmAh539h1H5D5qSsmw=
+Address = 10.0.0.2/32
+DNS = 1.1.1.1, 1.0.0.1
+MTU = 1380
+
+# portal-1
+[Peer]
+PublicKey = QxMYgprUSL1K77dIUrlgo5wOs8tJ9gZsfU6AQPLYn2I=
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = 193.26.159.70:2000
+`;
+
+console.log(convertToWireguardURL(config));
