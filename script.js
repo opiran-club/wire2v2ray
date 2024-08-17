@@ -1,7 +1,7 @@
 functionconvertToURL() {
     const config = document.getElementById('configInput').value;
     const lines = config.split('\n');
-    
+
     let privateKey = '', publicKey = '', address = '', mtu = '', endpoint = '', port = '';
 
     lines.forEach(line => {
@@ -12,7 +12,7 @@ functionconvertToURL() {
             publicKey = line.split(' ').pop().trim();
         }
         if (line.startsWith('Address ')) {
-            endpoint = line.split(' ').pop().trim();
+            address = line.split(' ').pop().trim();
         }
         if (line.startsWith('Port ')) {
             port = line.split(' ').pop().trim();
@@ -22,14 +22,14 @@ functionconvertToURL() {
         }
     });
 
-    if (!endpoint || !port) {
-        alert('Please ensure that "Address" and "Port" are provided in the config.');
+    // Validate necessary fieldsif (!privateKey || !publicKey || !address || !port) {
+        alert('Please ensure all required fields (Secret Key, Public Key, Address, Port) are provided in the config.');
         return;
     }
 
-    const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}:${port}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(endpoint)}&mtu=${encodeURIComponent(mtu)}#test`;
+    // Construct the URLconst url = `wireguard://${encodeURIComponent(privateKey)}@${address}:${port}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${encodeURIComponent(mtu)}#test`;
 
-    document.getElementById('output').innerText = url;
+    // Display the URLdocument.getElementById('output').innerText = url;
     document.getElementById('copyButton').style.display = 'inline-block';  // Show the copy button
 }
 
