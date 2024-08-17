@@ -21,10 +21,11 @@ textarea {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-family: monospace;
+    box-sizing: border-box; /* Ensures padding and border are included in the element's width and height */
 }
 
 button {
-    padding: 10px 20px;
+    padding: 10px20px;
     margin-right: 10px;
     border: none;
     border-radius: 4px;
@@ -37,14 +38,6 @@ button:hover {
     background-color: #0056b3;
 }
 
-#outputContainer {
-    margin-top: 20px;
-}
-
 #output {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    word-wrap: break-word; /* Ensures long URLs are wrapped */
+    height: 100px; /* Adjust height if needed */resize: none; /* Prevent resizing of the textarea */
 }
