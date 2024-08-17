@@ -1,4 +1,5 @@
-'use strict'; // Enforce strict modefunction convertToURL() {
+'use strict';
+function convertToURL() {
     console.log('Function called'); // Debug lineconst config = document.getElementById('configInput').value;
     console.log(config); // Log input valueconst lines = config.split('\n'); // Split the config into lineslet privateKey = '';
     let publicKey = '';
@@ -28,5 +29,3 @@
     
     document.getElementById('output').value = url; // Output the result in the designated area
 }
-
-// Ensure that the convertToURL function is called when the button is clickeddocument.querySelector('button').addEventListener('click', convertToURL);
