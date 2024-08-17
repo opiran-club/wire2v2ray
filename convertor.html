@@ -1,1 +1,76 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WireGuard URI Generator</title><link rel="stylesheet" href="styles.css"></head><body><div class="container"><h2>WireGuard URI Generator</h2><form id="wg-form"><label for="address">Address:</label><input type="text" id="address" name="address" required><label for="port">Port:</label><input type="number" id="port" name="port" required><label for="secretKey">Secret Key:</label><input type="text" id="secretKey" name="secretKey" required><label for="publicKey">Public Key:</label><input type="text" id="publicKey" name="publicKey" required><label for="mtu">MTU:</label><input type="number" id="mtu" name="mtu" required><label for="peerSecretKey">Peer Secret Key:</label><input type="text" id="peerSecretKey" name="peerSecretKey" required><label for="peerPublicKey">Peer Public Key:</label><input type="text" id="peerPublicKey" name="peerPublicKey" required><label for="allowedIPs">Allowed IPs:</label><input type="text" id="allowedIPs" name="allowedIPs" required><button type="button" onclick="generateURI()">Generate URI</button></form><div class="output"><h3>Generated WireGuard URI:</h3><p id="wg-uri"></p></div></div><script src="script.js"></script></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WireGuard Config to URL Converter</title><style>body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        #converter {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0010pxrgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #output {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            word-wrap: break-word;
+        }
+    </style></head><body><div id="converter"><textarea id="configInput" placeholder="Paste your WireGuard config here..."></textarea><button onclick="convertToURL()">Convert to wireguard:// URL</button><div id="output"></div></div><script>functionconvertToURL() {
+        const config = document.getElementById('configInput').value;
+        const lines = config.split('\n');
+        let privateKey = '', publicKey = '', address = '', mtu = '', endpoint = '', port = '';
+
+        lines.forEach(line => {
+            if (line.includes('Secret Key')) {
+                privateKey = line.split(' ').pop();
+            }
+            if (line.includes('Public Key')) {
+                publicKey = line.split(' ').pop();
+            }
+            if (line.includes('Address')) {
+                address = line.split(' ').pop();
+            }
+            if (line.includes('MTU')) {
+                mtu = line.split(' ').pop();
+            }
+            if (line.includes('Endpoint')) {
+                const endpointParts = line.split(' ').pop().split(':');
+                endpoint = endpointParts[0];
+                port = endpointParts[1];
+            }
+        });
+
+        const url = `wireguard://${encodeURIComponent(privateKey)}@${endpoint}:${port}/?publickey=${encodeURIComponent(publicKey)}&address=${encodeURIComponent(address)}&mtu=${encodeURIComponent(mtu)}#test`;
+
+        document.getElementById('output').innerText = url;
+    }
+</script></body></html>
