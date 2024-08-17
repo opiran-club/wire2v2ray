@@ -29,9 +29,10 @@
                 <label for="allowedIPs">Allowed IPs:</label>
                 <input type="text" id="allowedIPs" name="allowedIPs" required>
                 <button type="button" onclick="convertToURL()">Generate URL</button>
+                <button type="button" onclick="copyToClipboard()">Copy to clipboard</button>
             </form>
             <div class="output">
-                <h3>Generated WireGuard URL:</h3>
+                <h3>Generated Config:</h3>
                 <p id="wg-uri"></p>
             </div>
         </div>
