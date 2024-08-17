@@ -7,7 +7,10 @@
   </head>
   <body>
     <div id="converter"><textarea id="configInput" placeholder="Paste your WireGuard config here..."></textarea>
-      <button onclick="convertToURL()">Convert to wireguard:// URL</button><div id="output"></div>
+      <div id="output">
+      <button onclick="convertToURL()">Convert to wireguard:// URL</button>
+      <button id="copyButton" style="display:none;" onclick="copyToClipboard()">Copy to Clipboard</button>
+      </div>
     </div>
     <script src="script.js"></script>
   </body>
