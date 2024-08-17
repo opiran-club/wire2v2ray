@@ -39,4 +39,4 @@ AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = 193.26.159.70:2000
 `;
 
-console.log(convertToWireguardURL(config));
+console.log(convertToURL(config));
