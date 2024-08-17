@@ -11,3 +11,13 @@ function convertToURL() {
     const url = `wireguard://${encodeURIComponent(peerSecretKey)}@${address}:${port}/?publickey=${encodeURIComponent(peerPublicKey)}&address=${encodeURIComponent(allowedIPs)}&mtu=${encodeURIComponent(mtu)#${encodeURIComponent(name)}`;
     document.getElementById('wg-uri').innerText = url;
 }
+
+function copyToClipboard() {
+    const urlElement = document.getElementById('wg-uri');
+    const urlText = urlElement.innerText;
+    navigator.clipboard.writeText(urlText).then(() => {
+        alert("URL copied to clipboard!");
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+}
